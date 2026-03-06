@@ -1,0 +1,1 @@
+export type AssistantMode = "personal" | "professional" | "strategic";
