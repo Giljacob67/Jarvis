@@ -1,22 +1,38 @@
-# Jarvis V2 Architecture (Foundation)
+# Jarvis V2 Architecture
 
 ## Objective
-Create a production-oriented base for a voice-first assistant with strong PT-BR behavior.
+Production-oriented architecture for a voice-first assistant with PT-BR behavior and low latency targets.
 
-## Layered Design
-- Intent Router: classifies inputs into defined intent taxonomy.
-- Response Policy: enforces concise PT-BR response behavior.
-- Session Intelligence: short-term context and anti-repetition memory.
-- Tool Runtime: planned for Phase 2+ only.
-- Speech Formatting Layer: contract in place; runtime deferred.
+## Phase 1 (done)
+- Next.js foundation and modular contracts.
+- Supabase base wiring.
+- Chat scaffold and docs.
 
-## Phase 1 Scope
-- Next.js app foundation.
-- Domain and application contracts only.
-- Supabase base setup.
-- Minimal chat UI scaffold.
+## Phase 2 (done)
+- Core Assistant text flow with deterministic mode/direct paths.
+- Session intelligence in memory.
+- Minimal tool runtime base.
 
-## Out of Scope (Phase 1)
-- Voice runtime execution.
-- Tool integrations.
-- Document analysis implementation.
+## Phase 3 (current)
+OpenAI Text Brain integration (text-only).
+
+### Runtime flow
+1. `POST /api/chat` receives `{ sessionId?, mode?, message }`.
+2. `CoreAssistantService` orchestrates intent, session, tool runtime and response policy.
+3. Deterministic bypass without model:
+   - `mode_switch`
+   - `direct_command`
+4. Model-eligible intents:
+   - `open_conversation`
+   - `status_query` (only when synthesis is needed)
+   - `tool_action` (textual synthesis)
+5. `PromptBuilder` always injects:
+   - `responseChannel: text`
+   - `futureVoiceReady: true`
+6. `ResponsePolicyService` enforces concise output shape after model generation.
+7. Development debug metadata is included in `/api/chat`; production omits debug metadata.
+
+## Out of scope in Phase 3
+- Realtime voice runtime.
+- External task/calendar integrations.
+- Document analysis runtime.

@@ -5,3 +5,5 @@ export type ApiResult<TData> = {
   data?: TData;
   error?: string;
 };
+
+export * from "@/types/chat";

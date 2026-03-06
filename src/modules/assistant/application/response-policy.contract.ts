@@ -8,6 +8,11 @@ export type ResponsePolicyInput = {
   isVoiceResponse: boolean;
 };
 
+export type ResponseShapeOptions = {
+  hasExtraDetail?: boolean;
+};
+
 export interface ResponsePolicyContract {
   decide(input: ResponsePolicyInput): PolicyDecision;
+  enforceShape(text: string, decision: PolicyDecision, options?: ResponseShapeOptions): string;
 }

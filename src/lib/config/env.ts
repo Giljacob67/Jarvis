@@ -5,6 +5,7 @@ const serverEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
   OPENAI_API_KEY: z.string().min(1),
+  OPENAI_TEXT_MODEL: z.string().min(1).default("gpt-4.1-mini"),
 });
 
 const clientEnvSchema = z.object({

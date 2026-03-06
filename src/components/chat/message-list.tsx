@@ -1,7 +1,11 @@
+import type { AssistantMode } from "@/modules/assistant/domain/mode.types";
+
 type Message = {
   id: string;
   role: "user" | "assistant";
   text: string;
+  mode?: AssistantMode;
+  intentType?: string;
 };
 
 type MessageListProps = {
@@ -25,6 +29,11 @@ export function MessageList({ messages }: MessageListProps) {
         <article key={message.id}>
           <strong>{message.role === "user" ? "Voce" : "Jarvis"}:</strong>{" "}
           <span>{message.text}</span>
+          {message.role === "assistant" && message.mode ? (
+            <small style={{ display: "block", color: "#475569", marginTop: 4 }}>
+              modo: {message.mode} {message.intentType ? `| intent: ${message.intentType}` : ""}
+            </small>
+          ) : null}
         </article>
       ))}
     </div>
